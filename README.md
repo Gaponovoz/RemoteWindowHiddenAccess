@@ -1,5 +1,5 @@
 
-## :tw-1f6c5: RemoteWindowHiddenAccess by Gaponovoz
+## :bamboo: RemoteWindowHiddenAccess by Gaponovoz
 
 ###### My own program that allows remote launch & control any app/window in hidden mode!
 
