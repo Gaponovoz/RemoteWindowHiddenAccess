@@ -7,7 +7,7 @@
 
 Very simple, easy to deploy and open source! Can be used to remotely launch and control any program or window, totally invisibly. Does not prevent user from using PC at the same time!
 
-This project consists of two logical parts: "Master"(Server) and "Slave"(Client). "Master" should be installed on your server; "Slave" - on a client's PC.
+This project consists of two logical parts: "Master"(Server) and "Slave"(Client). "Master" should be installed on your server; "Slave" - should be run a client's PC.
 
 ------------
 
