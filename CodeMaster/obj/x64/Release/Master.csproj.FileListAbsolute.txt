@@ -1,0 +1,12 @@
+C:\master-server\CodeMaster\build\Master.exe.config
+C:\master-server\CodeMaster\build\Master.exe
+C:\master-server\CodeMaster\build\Master.pdb
+C:\master-server\CodeMaster\obj\x64\Release\Master.csproj.AssemblyReference.cache
+C:\master-server\CodeMaster\obj\x64\Release\Master.csproj.SuggestedBindingRedirects.cache
+C:\master-server\CodeMaster\obj\x64\Release\MasterForm.Desk.resources
+C:\master-server\CodeMaster\obj\x64\Release\MasterForm.List.resources
+C:\master-server\CodeMaster\obj\x64\Release\Master.Properties.Resources.resources
+C:\master-server\CodeMaster\obj\x64\Release\Master.csproj.GenerateResource.cache
+C:\master-server\CodeMaster\obj\x64\Release\Master.csproj.CoreCompileInputs.cache
+C:\master-server\CodeMaster\obj\x64\Release\Master.exe
+C:\master-server\CodeMaster\obj\x64\Release\Master.pdb
