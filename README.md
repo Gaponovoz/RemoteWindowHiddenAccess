@@ -11,7 +11,7 @@ This project consists of two logical parts: "Master"(Server) and "Slave"(Client)
 
 ------------
 
-####HOW TO DEPLOY & START USING:
+#### HOW TO DEPLOY & START USING:
 1.  Start any Windows server (you can even use Home editions, it does not matter), any 64-bit one will be good. 
 2. Forward port, say, 447 for this server. I think any port can be used. Make sure to allow firewall rules too.
 3. Download this repo and unpack as c:\master-server\
