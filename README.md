@@ -26,7 +26,7 @@ This project consists of two logical parts: "Master"(Server) and "Slave"(Client)
 ------------
 #### Some "Master" screenshots:
 
-![List of "Slaves"](https://i.ibb.co/pRVn3b8/Screenshot-6.jpg "List of "Slaves"")
+![List of Slaves](https://i.ibb.co/pRVn3b8/Screenshot-6.jpg "List of Slaves")
 
 ![Control window realtime](https://i.ibb.co/By1KJVm/Screenshot-2.jpg "Control window realtime")
 
