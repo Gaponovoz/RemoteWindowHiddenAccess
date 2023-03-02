@@ -25,7 +25,7 @@ namespace MasterForm
 
 		void List_Load(object sender, EventArgs e)
 		{
-			this.Text = " | Admin panel \"Master\" | Slaves amount: " + Directory.GetDirectories("C:\\master-server\\public\\").Length + " | LEFT click on Slave to control | RIGHT click Slave to delete | Click \'?\' to update grid -->";
+			this.Text = " Admin panel \"Master\" | Slaves amount: " + Directory.GetDirectories("C:\\master-server\\public\\").Length + " | LEFT click Slave to control | RIGHT click Slave to delete | Click \'?\' to update grid -->";
 
 			string CsvBase = "STATUS,Slave's Username + HWID,Last online,Date added"; //header of our virtual csv table file
 			foreach(string s in Directory.GetDirectories("C:\\master-server\\public")) //create table of Slave PCs
