@@ -172,6 +172,7 @@ namespace MasterForm
 			Thread.Sleep(333);
 			try { Process.Start($"C:\\master-server\\public\\{hwidik}\\clip.txt"); } catch { }
 		}
+
         void button8_Click(object sender, EventArgs e) { textBox3.Text += "{Esc}"; }
         void button3_Click(object sender, EventArgs e) { textBox3.Text += "{Enter}"; }
 		void button5_Click(object sender, EventArgs e) { textBox3.Text += "{BS}"; }
@@ -180,7 +181,12 @@ namespace MasterForm
 		void button9_Click(object sender, EventArgs e) { textBox3.Text += "{Up}"; }
 		void button10_Click(object sender, EventArgs e) { textBox3.Text += "{Down}"; }
 
-		void Desk_FormClosed(object sender, FormClosedEventArgs e) //on exit
+        void button2_Click(object sender, EventArgs e)
+        {
+            MakeCommand(CodeBox.Text);
+        }
+
+        void Desk_FormClosed(object sender, FormClosedEventArgs e) //on exit
 		{
             string hwidik = File.ReadAllText("C:\\master-server\\temphwid.txt");
             MakeCommand("nothing");
@@ -188,5 +194,6 @@ namespace MasterForm
             File.Delete("C:\\master-server\\temphwid.txt");
 			
 		}
+
 	}
 }

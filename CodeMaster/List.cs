@@ -75,40 +75,40 @@ namespace MasterForm
 			List_Load("", e); // update list
 		}
 
-		void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+		void dataGridView1_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left) //if left click - launch slave
-			{
-				try
-				{
-					File.WriteAllText("C:\\master-server\\temphwid.txt", dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());
-					this.Hide();
-					new Desk().ShowDialog(this);
-					this.Show();
-					List_Load("", e); // update list
-				}
-				catch (Exception)
-				{
-					dataGridView1.Rows[0].Selected = false; //unneeded auto selection fix
-				}
-			}
+            if (e.Button == MouseButtons.Left) //if left click - launch slave
+            {
+                try
+                {
+                    File.WriteAllText("C:\\master-server\\temphwid.txt", dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());
+                    this.Hide();
+                    new Desk().ShowDialog(this);
+                    this.Show();
+                    List_Load("", e); // update list
+                }
+                catch (Exception)
+                {
+                    dataGridView1.Rows[0].Selected = false; //unneeded auto selection fix
+                }
+            }
 
-			if (e.Button == MouseButtons.Right) //if right click - delete slave
-			{
-				DialogResult dialogResult = MessageBox.Show("Sure to delete this PC from list?\n(this will NOT ban it)", "   ❓   ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-				if (dialogResult == DialogResult.Yes)
-				{
-					try
-					{
-						Directory.Delete("C:\\master-server\\public\\" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), true);
-					}
-					catch (Exception)
-					{
-						MessageBox.Show("Can't delete Slave's directory...\nDid something go wrong?", "Master", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-					List_Load("", e); // update list
-				}
-			}
-		}
+            if (e.Button == MouseButtons.Right) //if right click - delete slave
+            {
+                DialogResult dialogResult = MessageBox.Show("Sure to delete this PC from list?\n(this will NOT ban it)", "   ❓   ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        Directory.Delete("C:\\master-server\\public\\" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), true);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Can't delete Slave's directory...\nDid something go wrong?", "Master", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    List_Load("", e); // update list
+                }
+            }
+        }
 	}
 }
