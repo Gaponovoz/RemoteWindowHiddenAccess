@@ -43,10 +43,22 @@ namespace MasterForm
 
 			try
 			{
-                dataGridView1.DataSource = readCSV("C:\\master-server\\temp.csv");
-                dataGridView1.Sort(dataGridView1.Columns[2], ListSortDirection.Descending);
-                dataGridView1.Rows[0].Selected = false; //unneeded auto selection fix
-            }
+				DataTable dt = new DataTable();
+
+				File.ReadLines("C:\\master-server\\temp.csv").Take(1) // Creating the columns
+					.SelectMany(x => x.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+					.ToList()
+					.ForEach(x => dt.Columns.Add(x.Trim()));
+
+				File.ReadLines("C:\\master-server\\temp.csv").Skip(1) // Adding the rows
+					.Select(x => x.Split(','))
+					.ToList()
+					.ForEach(line => dt.Rows.Add(line));
+
+				dataGridView1.DataSource = dt;
+				dataGridView1.Sort(dataGridView1.Columns[2], ListSortDirection.Descending);
+				dataGridView1.Rows[0].Selected = false; //unneeded auto selection fix
+			}
 			catch (Exception)
 			{
 				MessageBox.Show("Looks like you have no Slaves! Try running one on a PC, it should add into this list.", "Master", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -63,24 +75,7 @@ namespace MasterForm
 			List_Load("", e); // update list
 		}
 
-		public DataTable readCSV(string filePath) //Table viewer
-		{
-			var dt = new DataTable();
-			// Creating the columns
-			File.ReadLines(filePath).Take(1)
-				.SelectMany(x => x.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-				.ToList()
-				.ForEach(x => dt.Columns.Add(x.Trim()));
-
-			// Adding the rows
-			File.ReadLines(filePath).Skip(1)
-				.Select(x => x.Split(','))
-				.ToList()
-				.ForEach(line => dt.Rows.Add(line));
-			return dt;
-		}
-
-		void dataGridView1_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e) //click on Slave in table
+		void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left) //if left click - launch slave
 			{
@@ -88,31 +83,31 @@ namespace MasterForm
 				{
 					File.WriteAllText("C:\\master-server\\temphwid.txt", dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString());
 					this.Hide();
-                    new Desk().ShowDialog(this);
+					new Desk().ShowDialog(this);
 					this.Show();
-                    List_Load("", e); // update list
-                }
+					List_Load("", e); // update list
+				}
 				catch (Exception)
 				{
-                    dataGridView1.Rows[0].Selected = false; //unneeded auto selection fix
-                }
+					dataGridView1.Rows[0].Selected = false; //unneeded auto selection fix
+				}
 			}
 
 			if (e.Button == MouseButtons.Right) //if right click - delete slave
 			{
-                DialogResult dialogResult = MessageBox.Show("Sure to delete this PC from list?\n(this will NOT ban it)", "   ❓   ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    try
-                    {
-                        Directory.Delete("C:\\master-server\\public\\" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), true);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Can't delete Slave's directory...\nDid something went wrong.?", "Master", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    List_Load("", e); // update list
-                }
+				DialogResult dialogResult = MessageBox.Show("Sure to delete this PC from list?\n(this will NOT ban it)", "   ❓   ", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				if (dialogResult == DialogResult.Yes)
+				{
+					try
+					{
+						Directory.Delete("C:\\master-server\\public\\" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), true);
+					}
+					catch (Exception)
+					{
+						MessageBox.Show("Can't delete Slave's directory...\nDid something go wrong?", "Master", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+					List_Load("", e); // update list
+				}
 			}
 		}
 	}

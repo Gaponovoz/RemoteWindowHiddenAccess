@@ -59,6 +59,10 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.CodeBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -69,6 +73,7 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -77,6 +82,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -104,7 +110,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(973, 572);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "MANAGEMENT";
+            this.tabPage1.Text = "⚙️ MANAGEMENT";
             // 
             // textBox7
             // 
@@ -208,9 +214,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 27);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(973, 673);
+            this.tabPage2.Size = new System.Drawing.Size(973, 572);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Window";
+            this.tabPage2.Text = "🪟 Window";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button10
@@ -354,9 +360,9 @@
             this.tabPage5.Controls.Add(this.pictureBox3);
             this.tabPage5.Location = new System.Drawing.Point(4, 27);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(973, 673);
+            this.tabPage5.Size = new System.Drawing.Size(973, 572);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Screen";
+            this.tabPage5.Text = "🖥 Screen";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // pictureBox3
@@ -366,7 +372,7 @@
             this.pictureBox3.ImageLocation = "file:///C:/master-server/img.jpg";
             this.pictureBox3.Location = new System.Drawing.Point(0, 0);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(973, 673);
+            this.pictureBox3.Size = new System.Drawing.Size(973, 572);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 4;
             this.pictureBox3.TabStop = false;
@@ -379,9 +385,9 @@
             this.tabPage3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage3.Location = new System.Drawing.Point(4, 27);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(973, 673);
+            this.tabPage3.Size = new System.Drawing.Size(973, 572);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Installed apps";
+            this.tabPage3.Text = "🗳 Installed apps";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
@@ -418,7 +424,7 @@
             dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(973, 673);
+            this.dataGridView1.Size = new System.Drawing.Size(973, 572);
             this.dataGridView1.TabIndex = 13;
             // 
             // tabPage4
@@ -427,9 +433,9 @@
             this.tabPage4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabPage4.Location = new System.Drawing.Point(4, 27);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(973, 673);
+            this.tabPage4.Size = new System.Drawing.Size(973, 572);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Shortcuts";
+            this.tabPage4.Text = "🔗 Shortcuts";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // richTextBox1
@@ -438,13 +444,65 @@
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(973, 673);
+            this.richTextBox1.Size = new System.Drawing.Size(973, 572);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "Failed to load any shortcuts/links";
             // 
             // toolTip1
             // 
             this.toolTip1.ToolTipTitle = "Hint:";
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.button2);
+            this.tabPage6.Controls.Add(this.label1);
+            this.tabPage6.Controls.Add(this.CodeBox);
+            this.tabPage6.Location = new System.Drawing.Point(4, 27);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(973, 572);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "🔧 Execute code";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // CodeBox
+            // 
+            this.CodeBox.AcceptsTab = true;
+            this.CodeBox.AllowDrop = true;
+            this.CodeBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.CodeBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CodeBox.ForeColor = System.Drawing.SystemColors.Info;
+            this.CodeBox.HideSelection = false;
+            this.CodeBox.Location = new System.Drawing.Point(26, 69);
+            this.CodeBox.Multiline = true;
+            this.CodeBox.Name = "CodeBox";
+            this.CodeBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.CodeBox.Size = new System.Drawing.Size(921, 484);
+            this.CodeBox.TabIndex = 0;
+            this.CodeBox.Text = ";executethecodeplease,\r\n#NoTrayIcon\r\n#SingleInstance ignore ;you may change \"igno" +
+    "re\" to \"force\"\r\n\r\n";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label1.Location = new System.Drawing.Point(23, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(492, 36);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Important: to run Ahk code, Autohotkey must be installed on the Slave PC;\r\nDo not" +
+    " remove the automatically generated code!";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(579, 27);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(368, 36);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Execute this code on Slave!";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // Desk
             // 
@@ -473,6 +531,8 @@
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage4.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -505,5 +565,9 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TextBox CodeBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button2;
     }
 }
