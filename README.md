@@ -26,13 +26,15 @@ This project consists of two logical parts: "Master"(Server) and "Slave"(Client)
 ------------
 #### Some "Master" screenshots:
 
-![List of Slaves](https://i.ibb.co/pRVn3b8/Screenshot-6.jpg "List of Slaves")
+![List of Slaves](https://i.ibb.co/vPyQftG/Screenshot-2.jpg "List of Slaves")
 
 ![Control window realtime](https://i.ibb.co/By1KJVm/Screenshot-2.jpg "Control window realtime")
 
 ![](https://i.ibb.co/JqgmQqj/Screenshot-7.jpg)
 
 ![Take images of whole desktop](https://i.ibb.co/4ZTjnKC/Screenshot-3.jpg "Take images of whole desktop")
+
+![Remote independent script execution](https://i.ibb.co/0jdGjc9/Screenshot-1.jpg "Remote independent script execution")
 
 ![List of installed apps](https://i.ibb.co/n89dJw3/Screenshot-4.jpg "List of installed apps")
 
