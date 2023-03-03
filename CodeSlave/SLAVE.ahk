@@ -11,35 +11,8 @@ SetTitleMatchMode, 2
 FileCreateDir, %A_AppData%\Temporary\
 SetWorkingDir, %A_AppData%\Temporary\
 ServerLink = http://localhost:447/ ; =======SERVER INFORMATION=======
-
-try
-{
 #Include wininet.ini
 #Include winapi.ini
-}
-catch
-{
-FileAppend, `n%A_Sec% Error while trying to use libraries in #include, log.txt ;----------------------------------------------
-exitapp
-}
-
-
-
-
-
-;launch on second run only:
-; If !FileExist( A_AppData "\Temporary\zhopa.txt")
-; {
-	; sleep 333
-	; fileappend, makecert, %A_AppData%\Temporary\zhopa.txt
-	; sleep 785
-	; exitapp
-; }
-
-
-
-
-
 
 ;get server status (check is server available):
 checkserverstatus:
