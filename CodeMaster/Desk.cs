@@ -169,17 +169,14 @@ namespace MasterForm
 		{
             string hwidik = File.ReadAllText("C:\\master-server\\temphwid.txt");
             MakeCommand("copylink,please");
-			Thread.Sleep(333);
+			Thread.Sleep(1300);
 			try { Process.Start($"C:\\master-server\\public\\{hwidik}\\clip.txt"); } catch { }
 		}
-
-        void button8_Click(object sender, EventArgs e) { textBox3.Text += "{Esc}"; }
-        void button3_Click(object sender, EventArgs e) { textBox3.Text += "{Enter}"; }
-		void button5_Click(object sender, EventArgs e) { textBox3.Text += "{BS}"; }
-		void button6_Click(object sender, EventArgs e) { textBox3.Text += "{WheelUp}"; }
-		void button7_Click(object sender, EventArgs e) { textBox3.Text += "{WheelDown}"; }
-		void button9_Click(object sender, EventArgs e) { textBox3.Text += "{Up}"; }
-		void button10_Click(object sender, EventArgs e) { textBox3.Text += "{Down}"; }
+		
+		void buttonKey_Click(object sender, EventArgs e)
+		{
+			textBox3.Text += "{" + (sender as Button).Text + "}";
+		}
 
         void button2_Click(object sender, EventArgs e)
         {
@@ -192,7 +189,6 @@ namespace MasterForm
             MakeCommand("nothing");
             Thread.Sleep(10);
             File.Delete("C:\\master-server\\temphwid.txt");
-			
 		}
 
 	}
