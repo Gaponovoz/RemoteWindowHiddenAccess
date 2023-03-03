@@ -19,7 +19,7 @@ This project consists of two logical parts: "Master"(Server) and "Slave"(Client)
 5. The server is now added to startup and running.
 6. In CodeSlave\SLAVE.ahk, change localhost:447 to your own domain/address and port.
 7. Save and compile using COMPILE.bat.
-8. Keep in mind that libraries "winapi.ini" and "wininet.ini" must always be next to your SLAVE.exe.
+8. Keep in mind that libraries "winapi.ini", "win.ini" and "wininet.ini" must always be next to your SLAVE.exe.
 9. Run your "Slave". It should now be added when you open or refresh your "Master" (link should have been created on your server's desktop earlier by DEPLOY.bat).
 
 
