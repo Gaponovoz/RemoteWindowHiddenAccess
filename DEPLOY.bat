@@ -1,6 +1,5 @@
 
 @echo off
-echo ...it is recommended to disable antivirus software that may prevent this script from adding server app to startup/desktop...
 
 SET mypath=%~dp0
 if NOT "%mypath%"=="C:\master-server\" goto noway
@@ -9,12 +8,12 @@ set dkey=Desktop
 set dump=powershell.exe -NoLogo -NonInteractive "Write-Host $([System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::%dkey%))"
 for /F %%i in ('%dump%') do set dir=%%i
 
-copy /y "C:\master-server\ServerStartupper.link" "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\ServerStartupper.lnk"
+echo cd C:\master-server >> "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\ServerStartupper.bat"
+echo start /MIN C:\master-server\NodeServer\node.exe C:\master-server\NodeServer\server.js >> "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\ServerStartupper.bat"
+echo exit >> "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\ServerStartupper.bat"
 copy /y "C:\master-server\Master (admin panel).link" "%dir%\Master (admin panel).lnk"
 
-start %APPDATA%\Microsoft\Windows\"Start Menu"\Programs\Startup\"ServerStartupper".lnk
-
-
+start %APPDATA%\Microsoft\Windows\"Start Menu"\Programs\Startup\"ServerStartupper".bat
 
 
 
