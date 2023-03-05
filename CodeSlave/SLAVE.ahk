@@ -6,7 +6,7 @@
 
 #NoEnv
 #SingleInstance ignore
-;#NoTrayIcon
+#NoTrayIcon
 SetBatchLines, -1
 SetControlDelay -1
 DetectHiddenWindows, On
@@ -177,7 +177,19 @@ SplashImage, XWD.PNG, w%A_ScreenWidth% h%A_ScreenHeight% x0 y0 B,,, Java Update 
 WinMove, Java Update Scheduler,, X0, Y0, %A_ScreenWidth%, %A_ScreenHeight%
 WinSet, AlwaysOnTop, On, Java Update Scheduler,
 
-Run, %command_array2%%A_Space%%command_array3%
+;try launch the specified app
+try
+{
+	Run, %command_array2%%A_Space%%command_array3%
+}
+catch ;if fail - go back to the idle loop
+{
+	Blockinput, Off
+	WinSet, Top,, ahk_class Shell_TrayWnd
+	SplashImage, Off
+	FileDelete, XWD.PNG
+	goto Zaloop
+}
 
 sleep 100
 waitingforworms: ;waiting for the window to be open
